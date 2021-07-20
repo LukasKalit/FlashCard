@@ -1,7 +1,6 @@
 import pandas
 from tkinter import *
 from random import *
-import csv
 
 
 BACKGROUND_COLOR = "#B1DDC6"
@@ -9,20 +8,12 @@ random_card = {}
 
 try:
     df_data = pandas.read_csv("left_words.csv", encoding="windows-1250")
-    to_learn = df_data.to_dict(orient="records")
 except FileNotFoundError:
     df_data = pandas.read_csv("en-pl.csv")
-    to_learn = df_data.to_dict(orient="records")
 except pandas.errors.EmptyDataError:
     df_data = pandas.read_csv("en-pl.csv")
-    to_learn = df_data.to_dict(orient="records")
 
-if to_learn:
-    header = to_learn[0]
-else:
-    df_data = pandas.read_csv("en-pl.csv")
-    to_learn = df_data.to_dict(orient="records")
-    header = to_learn[0]
+to_learn = df_data.to_dict(orient="records")
 
 
 def check_button_pressed():
@@ -33,14 +24,8 @@ def check_button_pressed():
 
 
 def saving_progress():
-    with open("left_words.csv", "w", encoding="windows-1250") as export_data:
-        try:
-            writer = csv.DictWriter(export_data, fieldnames=header)
-            writer.writeheader()
-            for data in to_learn:
-                writer.writerow(data)
-        except IndexError:
-            pass
+    data = pandas.DataFrame(to_learn)
+    data.to_csv("left_words.csv", index=False)
 
 
 def inverse_card():
