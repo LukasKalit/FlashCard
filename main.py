@@ -7,7 +7,7 @@ BACKGROUND_COLOR = "#B1DDC6"
 random_card = {}
 
 try:
-    df_data = pandas.read_csv("left_words.csv", encoding="windows-1250")
+    df_data = pandas.read_csv("left_words.csv")
 except FileNotFoundError:
     df_data = pandas.read_csv("en-pl.csv")
 except pandas.errors.EmptyDataError:
